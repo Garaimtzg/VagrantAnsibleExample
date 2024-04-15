@@ -27,7 +27,7 @@
         dest: "/var/www/myapp"
 
     - name: Instalar Express
-      command: npm install expresscd
+      command: npm install express
       args:
         chdir: "/var/www/myapp"
 
