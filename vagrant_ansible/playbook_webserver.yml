@@ -1,0 +1,38 @@
+---
+- hosts: webserver
+  become: yes
+  tasks:
+    - name: Actualizar la lista de paquetes
+      apt:
+        update_cache: yes
+
+    - name: Instalar nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Iniciar y habilitar nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+
+    - name: Crear un nuevo archivo de configuración de nginx
+      copy:
+        dest: /etc/nginx/sites-available/webserver
+        content: |
+          server {
+            listen 80;
+            server_name localhost;
+          
+            location / {
+              try_files $uri $uri/ =404;
+            }
+          }    
+
+    - name: Reiniciar nginx para aplicar los cambios
+      systemd:
+        name: nginx
+        state: restarted
+...

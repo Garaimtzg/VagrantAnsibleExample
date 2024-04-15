@@ -1,0 +1,39 @@
+---
+- hosts: appserver
+  become: yes
+  tasks:
+    - name: Actualizar la lista de paquetes
+      apt:
+        update_cache: yes
+
+    - name: Instalar Node.js
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Instalar npm
+      apt:
+        name: npm
+        state: present
+
+    - name: Crear un directorio para la aplicación
+      file:
+        path: /var/www/myapp
+        state: directory
+
+    - name: Copiar los archivos de la aplicación al servidor
+      copy:
+        src: "../app/"
+        dest: "/var/www/myapp"
+
+    - name: Instalar Express
+      command: npm install expresscd
+      args:
+        chdir: "/var/www/myapp"
+
+    - name: Iniciar la aplicación
+      command: node main.js
+      args:
+        chdir: "/var/www/myapp"
+
+...
