@@ -31,9 +31,6 @@
       args:
         chdir: "/var/www/myapp"
 
-    - name: Iniciar la aplicación
-      command: node main.js
-      args:
-        chdir: "/var/www/myapp"
-
+#  ejecuta la app en la máquina virtual appserver
+#  usando node main.js en el directorio var/www/myapp para que funcione
 ...
